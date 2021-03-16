@@ -27,6 +27,27 @@ string keygen()
 }		
 
 
+string gencode(string key) {
+	cout<< "[KEY] " << key <<" [KEY]" <<endl;		
+	string input2;
+	string output2;
+	int len2;	
+	cout<<"ENCODE: ";
+	cin.ignore(80, '\n');
+	getline(cin,input2);
+	len2 = input2.length();
+	for(int i=0; i<len2; i++) {
+		for(int j=0; j<95; j++) {
+			if(input2[i]==ckey[j]) {
+				output2 += key[j];	
+			}		
+		}	
+	}		
+	return output2;
+}
+
+
+
 string encode(string key) {
 	string input;
 	string output;
@@ -34,10 +55,10 @@ string encode(string key) {
 	cout<<"ENCODE: ";
 	getline(cin,input);
 	len = input.length();
-	for(int i=0; i<len; i++) {
-		for(int j=0; j<95; j++) {
-			if(input[i]==ckey[j]) {
-				output += key[j];	
+	for(int a=0; a<len; a++) {
+		for(int b=0; b<95; b++) {
+			if(input[a]==ckey[b]) {
+				output += key[b];	
 			}		
 		}	
 	}		
@@ -46,29 +67,29 @@ string encode(string key) {
 
 
 string decode(string key) {
-	string input;
-	string output;
+	string input1;
+	string output1;
 	string dkey;
-	string loc1;
-	int loc2;
-	int loc3;
-	int len;
-	for(int x=0; x<95; x++) {
-		loc1 = ckey[x];
-		loc2 = key.find(loc1);
-		dkey += ckey[loc2];		
+	string loc11;
+	int loc21;
+	int loc31;
+	int len1;
+	for(int z=0; z<95; z++) {
+		loc11 = ckey[z];
+		loc21 = key.find(loc11);
+		dkey += ckey[loc21];		
 	}	
 	cout<<"DECODE: ";
-	getline(cin,input);
-	len = input.length();
-	for(int i=0; i<len; i++) {
-		for(int j=0; j<95; j++) {
-			if(input[i]==ckey[j]) {
-				output += dkey[j];	
+	getline(cin,input1);
+	len1 = input1.length();
+	for(int k=0; k<len1; k++) {
+		for(int p=0; p<95; p++) {
+			if(input1[k]==ckey[p]) {
+				output1 += dkey[p];	
 			}		
 		}	
 	}		
-	return output;
+	return output1;
 
 }
 
@@ -109,7 +130,7 @@ while(true) {
 		if (FileOrGen == "g") {
 			string keyg;
 			keyg = keygen();
-			cout<< encode(keyg) <<endl;
+			cout<< gencode(keyg) <<endl;
 		}
 		
 		else if (FileOrGen == "f") {
@@ -140,19 +161,11 @@ while(true) {
 			cin.ignore(80, '\n');
 			getline(cin,pastekey);	
 			cout<< decode(pastekey) <<endl;
-			
 		}
 	
-	
-
 	}
-
-
-
-
 }
 }
-
 
 
 
