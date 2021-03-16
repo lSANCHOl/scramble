@@ -24,19 +24,13 @@ def keygen():
 
 def encode():
     key = input("KEY: ")
-    dkey = ""
-    for i in range(len(key)):
-        loc1 = ckey[i]
-        loc2 = key.find(loc1)
-        loc3 = ckey[loc2]
-        dkey += loc3
     out = ""
     inp = input("ENCODE: ")
     for i in range(len(inp)):
         for j in range(len(ckey)):
             if inp[i] == ckey[j]:
-                tmp = key[j]
-                out += tmp
+                out = key[j]
+                
     print("[+]",out,"[+]")
     choose()
 	
@@ -54,8 +48,8 @@ def decode():
     for i in range(len(inp)):
         for j in range(len(ckey)):
             if inp[i] == ckey[j]:
-                tmp = dkey[j]
-                out += tmp
+                out = dkey[j]
+                
     print("[+]",out,"[+]")
     choose()
 
