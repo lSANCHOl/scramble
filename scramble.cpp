@@ -3,8 +3,26 @@
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 
 using namespace std;
+using std::cout; using std::cerr;
+using std::endl; using std::string;
+using std::ifstream; using std::ostringstream;
+
+
+string readFileIntoString(const string& path) {
+    ifstream input_file(path);
+    if (!input_file.is_open()) {
+        cerr << "Could not open the file - '"
+             << path << "'" << endl;
+        exit(EXIT_FAILURE);
+    }
+    return string((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
+}
 
 // lenght = 95
 string ckey = "abcdefghijklmnopqrstuvwxyz1234567890!$%^&*()-_=+[{]};:'@#~|,<.>/? ABCDEFGHIJKLMNOPQRSTUVWXYZ\"']";
@@ -26,34 +44,65 @@ string keygen()
 
 }		
 
-
 string gencode(string key) {
-	cout<< "[KEY] " << key <<" [KEY]" <<endl;		
-	string input2;
-	string output2;
-	int len2;	
-	cout<<"ENCODE: ";
-	cin.ignore(80, '\n');
-	getline(cin,input2);
-	len2 = input2.length();
-	for(int i=0; i<len2; i++) {
-		for(int j=0; j<95; j++) {
-			if(input2[i]==ckey[j]) {
-				output2 += key[j];	
+	string input;
+	string output;
+	string filename;
+	string chooser;
+		
+	int len;
+	cout <<"[f]ile to encode  |  [t]ype to encode: ";
+	cin >> chooser;
+
+	if (chooser == "t") {
+		cout<<"ENCODE: ";
+		cin.ignore(80, '\n');
+		getline(cin,input);
+	}
+	
+	else if (chooser == "f") {
+		cout << "name of file: ";
+		cin >> filename;
+		input = readFileIntoString(filename);
+
+	}
+
+	
+	len = input.length();
+	for(int a=0; a<len; a++) {
+		for(int b=0; b<95; b++) {
+			if(input[a]==ckey[b]) {
+				output += key[b];	
 			}		
 		}	
 	}		
-	return output2;
+	return output;
 }
-
-
 
 string encode(string key) {
 	string input;
 	string output;
-	int len;	
-	cout<<"ENCODE: ";
-	getline(cin,input);
+	string filename;
+	string chooser;
+		
+	int len;
+	cout <<"[f]ile to encode  |  [t]ype to encode: ";
+	cin >> chooser;
+
+	if (chooser == "t") {
+		cout<<"ENCODE: ";
+		cin.ignore(80, '\n');
+		getline(cin,input);
+	}
+	
+	else if (chooser == "f") {
+		cout << "name of file: ";
+		cin >> filename;
+		input = readFileIntoString(filename);
+
+	}
+
+
 	len = input.length();
 	for(int a=0; a<len; a++) {
 		for(int b=0; b<95; b++) {
@@ -71,6 +120,8 @@ string decode(string key) {
 	string output1;
 	string dkey;
 	string loc11;
+	string chooser1;
+	string filename;
 	int loc21;
 	int loc31;
 	int len1;
@@ -79,8 +130,23 @@ string decode(string key) {
 		loc21 = key.find(loc11);
 		dkey += ckey[loc21];		
 	}	
-	cout<<"DECODE: ";
-	getline(cin,input1);
+
+	cout <<"[f]ile to decode  |  [t]ype to decode: ";
+	cin >> chooser1;
+
+	if (chooser1 == "t") {
+		cout<<"DECODE: ";
+		cin.ignore(80, '\n');
+		getline(cin,input1);
+	}
+	
+	else if (chooser1 == "f") {
+		cout << "name of file: ";
+		cin >> filename;
+		input1 = readFileIntoString(filename);
+	}
+
+
 	len1 = input1.length();
 	for(int k=0; k<len1; k++) {
 		for(int p=0; p<95; p++) {
@@ -93,11 +159,9 @@ string decode(string key) {
 
 }
 
-
-
 int main()
 {
-
+string filename;
 while(true) {	
 	cout<< endl;
 	string choose;
@@ -110,16 +174,14 @@ while(true) {
 		cin>> PrintOrSave;
 	
 		if (PrintOrSave == "p") {
-			cout<< "[KEY] " << keygen() <<" [KEY]" <<endl;		
-			
+			cout<< "[KEY] " << keygen() <<" [KEY]" <<endl;					
 		}	
 		
 		else if (PrintOrSave == "s") {
 			ofstream keyfile;
 			keyfile.open("KEY");
 			keyfile<< keygen() <<endl;
-			keyfile.close();
-				
+			keyfile.close();				
 		}
 	}
 	else if (choose == "e") {
@@ -130,11 +192,54 @@ while(true) {
 		if (FileOrGen == "g") {
 			string keyg;
 			keyg = keygen();
-			cout<< gencode(keyg) <<endl;
+			ofstream keyfile;
+			keyfile.open("KEY");
+			keyfile<< keyg <<endl;
+			keyfile.close();
+		
+			string write;
+			cout << "[w]rite output to file  |  [p]rint output: ";
+			cin >> write;	
+			
+			if (write == "p") {
+				cout<< gencode(keyg) <<endl;
+			}
+			
+			else if (write == "w") {
+				ofstream encoded;
+				string message;
+				encoded.open("encoded.txt");
+				message = gencode(keyg);
+				encoded<< message << endl;
+				encoded.close();
+				cout << message << endl;
+			}	
 		}
 		
 		else if (FileOrGen == "f") {
-			encode("Still Need to finish this");
+			cout << "Name of key file";
+			cin >> filename;
+    			string file_contents;
+			file_contents = readFileIntoString(filename);
+    			cout << file_contents;
+						
+			string write;
+			cout << "[w]rite output to file  |  [p]rint output: ";
+			cin >> write;	
+			
+			if (write == "p") {
+				cout << encode(file_contents) << endl;
+			}
+			
+			else if (write == "w") {
+				ofstream encoded;
+				string message;
+				encoded.open("encoded.txt");
+				message = encode(file_contents);
+				encoded<< message << endl;
+				encoded.close();
+				cout << message << endl;
+			}
 		}
 	
 		else if (FileOrGen == "p") {
@@ -142,8 +247,25 @@ while(true) {
 			string pastekey;
 			cin.ignore(80, '\n');
 			getline(cin,pastekey);	
-			cout<< encode(pastekey) <<endl;
+						
+			string write;
+			cout << "[w]rite output to file  |  [p]rint output: ";
+			cin >> write;	
 			
+			
+			if (write == "p") {
+				cout<< encode(pastekey) <<endl;
+			}
+			
+			else if (write == "w") {
+				ofstream encoded;
+				string message;
+				encoded.open("encoded.txt");
+				message = encode(pastekey);
+				encoded<< message << endl;
+				encoded.close();
+				cout << message << endl;
+			}
 		}
 	}
 	
@@ -152,7 +274,31 @@ while(true) {
 		cout<< "[f]ile used as key | [p]aste key in: ";
 		cin>> choice;
 		if (choice == "f") {
-		cout << "Finish This!"<<endl;
+			cout << "Name of key file";
+			cin >> filename;
+    			string file_contents;
+			file_contents = readFileIntoString(filename);
+    			cout << file_contents;
+				
+							
+			string write;
+			cout << "[w]rite output to file  |  [p]rint output: ";
+			cin >> write;	
+			
+			
+			if (write == "p") {
+				cout << decode(file_contents) << endl;
+			}
+			
+			else if (write == "w") {
+				ofstream decoded;
+				string message;
+				decoded.open("decoded.txt");
+				message = decode(file_contents);
+				decoded<< message << endl;
+				decoded.close();
+				cout << message << endl;
+			}	
 		}
 	
 		else if (choice == "p") {
@@ -161,11 +307,26 @@ while(true) {
 			cin.ignore(80, '\n');
 			getline(cin,pastekey);	
 			cout<< decode(pastekey) <<endl;
+						
+			string write;
+			cout << "[w]rite output to file  |  [p]rint output: ";
+			cin >> write;	
+			
+			
+			if (write == "p") {
+				cout << decode(pastekey) << endl;
+			}
+			
+			else if (write == "w") {
+				ofstream decoded;
+				string message;
+				decoded.open("decoded.txt");
+				message = decode(pastekey);
+				decoded<< message << endl;
+				decoded.close();
+				cout << message << endl;
+			}
 		}
-	
 	}
 }
 }
-
-
-
