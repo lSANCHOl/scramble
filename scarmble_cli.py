@@ -74,9 +74,8 @@ def decode(key,message,output):
 
 parser = argparse.ArgumentParser(description='Encode and Decode messages with a unique key')    
 parser.add_argument('-k', '--Key', metavar='', help='Path to unique key')
-parser.add_argument('-e', '--Encode', action='store_true', help='encode')
-parser.add_argument('-d', '--Decode', action='store_true', help='decode')
-parser.add_argument('-f', '--File', metavar='', help='path to file to encode/decode')
+parser.add_argument('-e', '--Encode', metavar='', help='path to file to encode')
+parser.add_argument('-d', '--Decode', metavar='', help='path to file to decode')
 parser.add_argument('-p', '--Print', action='store_true', help='print encoded/decoded message')
 parser.add_argument('-s', '--Store', action='store_true', help='store encoded/decoded message to file')
 parser.add_argument('-b', '--Both', action='store_true', help='print and store encoded/decoded message')
@@ -87,7 +86,7 @@ if __name__ == '__main__':
    
     if args.Encode and args.Print and args.Key:
         output = True
-        filename = args.File
+        filename = args.Encode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -101,7 +100,7 @@ if __name__ == '__main__':
     
     elif args.Encode and args.Store and args.Key:
         output = False
-        filename =args.File
+        filename =args.Encode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -112,9 +111,9 @@ if __name__ == '__main__':
         encode(keycontents,filecontents,output)
 
      
-    elif args.Encode and args.Store and args.Key:
+    elif args.Encode and args.Both and args.Key:
         output = 2
-        filename = args.File 
+        filename = args.Encode 
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -130,7 +129,7 @@ if __name__ == '__main__':
         keycontents = keygen(ckey)
         print("[KEY]",keycontents,"[KEY]")
         output = True
-        filename = args.File
+        filename = args.Encode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -142,7 +141,7 @@ if __name__ == '__main__':
         keycontents = keygen(ckey)
         print("[KEY]",keycontents,"[KEY]")
         output = False
-        filename = args.File
+        filename = args.Encode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -153,7 +152,7 @@ if __name__ == '__main__':
         keycontents = keygen(ckey)
         print("[KEY]",keycontents,"[KEY]")
         output = 2
-        filename = args.File
+        filename = args.Encode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -162,7 +161,7 @@ if __name__ == '__main__':
     
     if args.Decode and args.Print and args.Key:
         output = True
-        filename = args.File
+        filename = args.Decode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -176,7 +175,7 @@ if __name__ == '__main__':
     
     elif args.Decode and args.Store and args.Key:
         output = False
-        filename = args.File
+        filename = args.Decode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -187,9 +186,9 @@ if __name__ == '__main__':
         decode(keycontents,filecontents,output)
 
      
-    elif args.Decode and args.Store and args.Key:
+    elif args.Decode and args.Both and args.Key:
         output = 2
-        filename = args.File 
+        filename = args.Decode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -205,7 +204,7 @@ if __name__ == '__main__':
         keycontents = keygen(ckey)
         print("[KEY]",keycontents,"[KEY]")
         output = True
-        filename = args.File 
+        filename = args.Decode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -217,7 +216,7 @@ if __name__ == '__main__':
         keycontents = keygen(ckey)
         print("[KEY]",keycontents,"[KEY]")
         output = False
-        filename = args.File
+        filename = args.Decode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
@@ -228,7 +227,7 @@ if __name__ == '__main__':
         keycontents = keygen(ckey)
         print("[KEY]",keycontents,"[KEY]")
         output = 2
-        filename = args.File
+        filename = args.Decode
         with open(filename, 'r') as file:
             filecontents = file.read()
             file.close()
