@@ -79,137 +79,161 @@ if __name__ == '__main__':
         sys.exit(1)
    
     elif args.Encode and args.Print and args.Key:
-        output = True
-        filename = args.Encode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
+        output = True 
+        try:
+          with open(args.Encode, 'r') as file:
+                message = file.read()
+                file.close()
+        except:
+            message = args.Encode
         keyname = args.Key 
         with open(keyname, 'r') as file:
             keycontents = file.read()
             file.close()
-        encode(keycontents,filecontents,output)
+        encode(keycontents,message,output)
 
     elif args.Encode and args.Store and args.Key:
         output = False
-        filename =args.Encode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
+        try:
+            with open(args.Encode, 'r') as file:
+                message = file.read()
+                file.close()
+        except:
+            message = args.Encode
         keyname = args.Key
         with open(keyname, 'r') as file:
             keycontents = file.read()
             file.close()
-        encode(keycontents,filecontents,output)
+        encode(keycontents,message,output)
      
     elif args.Encode and args.Both and args.Key:
         output = 2
-        filename = args.Encode 
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
+        try:
+            with open(args.Encode, 'r') as file:
+                message = file.read()
+                file.close()
+        except:
+            message = args.Encode
         keyname = args.Key 
         with open(keyname, 'r') as file:
             keycontents = file.read()
             file.close()
-        encode(keycontents,filecontents,output)
+        encode(keycontents,message,output)
      
     elif args.Encode and args.Print and args.Keygen:
         keycontents = keygen(ckey)
         print('[KEY]',keycontents,'[KEY]')
         output = True
-        filename = args.Encode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
-        encode(keycontents,filecontents,output)
+        try:
+            with open(args.Encode, 'r') as file:
+                message = file.read()
+                file.close()
+        except:
+            message = args.Encode
+        encode(keycontents,message,output)
     
     elif args.Encode and args.Store and args.Keygen:
         keycontents = keygen(ckey)
         print('[KEY]',keycontents,'[KEY]')
         output = False
-        filename = args.Encode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
-        encode(keycontents,filecontents,output)
+        try:
+            with open(args.Encode, 'r') as file:
+                message = file.read()
+                file.close()
+        except:
+            message = args.Encode
+        encode(keycontents,message,output)
      
     elif args.Encode and args.Both and args.Keygen:
         keycontents = keygen(ckey)
         print('[KEY]',keycontents,'[KEY]')
         output = 2
-        filename = args.Encode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
-        encode(keycontents,filecontents,output)
+        try:
+            with open(args.Encode, 'r') as file:
+                filecontents = file.read()
+                file.close()
+        except:
+            message = args.Encode
+        encode(keycontents,message,output)
     
     elif args.Decode and args.Print and args.Key:
         output = True
-        filename = args.Decode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
+        try:
+            with open(args.Decode, 'r') as file:
+                message = file.read()
+                file.close()
+        except:
+            message = args.Decode
         keyname = args.Key
         with open(keyname, 'r') as file:
             keycontents = file.read()
             file.close()
-        decode(keycontents,filecontents,output)
+        decode(keycontents,message,output)
 
     elif args.Decode and args.Store and args.Key:
         output = False
-        filename = args.Decode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
+        try:
+            with open(args.Decode, 'r') as file:
+                filecontents = file.read()
+                file.close()
+        except:
+            message = args.Decode
         keyname = args.Key
         with open(keyname, 'r') as file:
             keycontents = file.read()
             file.close()
-        decode(keycontents,filecontents,output)
+        decode(keycontents,message,output)
      
     elif args.Decode and args.Both and args.Key:
         output = 2
-        filename = args.Decode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
+        try:
+            with open(args.Decode, 'r') as file:
+                message = file.read()
+                file.close()
+        except:
+            message = args.Decode
         keyname = args.Key 
         with open(keyname, 'r') as file:
             keycontents = file.read()
             file.close()
-        decode(keycontents,filecontents,output)
+        decode(keycontents,message,output)
      
     elif args.Decode and args.Print and args.Keygen:
         keycontents = keygen(ckey)
         print('[KEY]',keycontents,'[KEY]')
         output = True
-        filename = args.Decode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
-        decode(keycontents,filecontents,output)
+        try:
+            with open(args.Decode, 'r') as file:
+                message = file.read()
+                file.close()
+        except:
+            message = args.Decode
+        decode(keycontents,message,output)
     
     elif args.Decode and args.Store and args.Keygen:
         keycontents = keygen(ckey)
         print('[KEY]',keycontents,'[KEY]')
         output = False
-        filename = args.Decode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
-        decode(keycontents,filecontents,output)
+        try:
+            with open(args.Decode, 'r') as file:
+                message = file.read()
+                file.close()
+        except:
+            message = args.Decode
+        decode(keycontents,messsage,output)
 
     elif args.Decode and args.Both and args.Keygen:
         keycontents = keygen(ckey)
         print('[KEY]',keycontents,'[KEY]')
         output = 2
-        filename = args.Decode
-        with open(filename, 'r') as file:
-            filecontents = file.read()
-            file.close()
+        try:
+            with open(args.Decode, 'r') as file:
+                message = file.read()
+                file.close()
+        except:
+            message = args.Decode
         Decode(keycontents,filecontents,output)
-    
+
     elif args.Keygen and args.Print:
         print(keygen(ckey))
     elif args.Keygen and args.Store:
