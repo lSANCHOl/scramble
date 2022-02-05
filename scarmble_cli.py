@@ -38,7 +38,7 @@ def encode(key,message,output):
 				
 def decode(key,message,output):
     dkey = ''
-    for i in range(len(key)-1): 
+    for i in range(len(key)): 
         loc1 = ckey[i]
         loc2 = key.find(loc1)
         loc3 = ckey[loc2]
